@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Load your custom marker image
-marker_image = cv2.imread(r"C:\Users\eyeha\Desktop\marker.jpg", cv2.IMREAD_GRAYSCALE)
+marker_image = cv2.imread(r"", cv2.IMREAD_GRAYSCALE)
 
 # Create an ORB detector
 orb = cv2.ORB_create()
