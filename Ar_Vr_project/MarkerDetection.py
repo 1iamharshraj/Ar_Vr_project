@@ -6,6 +6,8 @@ marker_dict = aruco.getPredefinedDictionary(aruco.DICT_4X4_50)
 
 param_markers = aruco.DetectorParameters()
 
+detector = aruco.ArucoDetector(marker_dict, param_markers)
+
 cap = cv.VideoCapture(0)
 
 while True:
@@ -13,9 +15,7 @@ while True:
     if not ret:
         break
     gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    marker_corners, marker_IDs, reject = aruco.detectMarkers(
-        gray_frame, marker_dict, parameters=param_markers
-    )
+    marker_corners, marker_IDs, reject = detector.detectMarkers(gray_frame)
     if marker_corners:
         for ids, corners in zip(marker_IDs, marker_corners):
             cv.polylines(
