@@ -1,0 +1,104 @@
+body {
+    background-color: rgb(239, 227, 255);
+}
+.head {
+    font-size: 70px;
+}
+.center,h1,h3,p,h4 {
+    text-align: center;
+}
+.image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+.container {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    width: 170px;
+    height: 170px;
+    margin: -70px -75px;
+}
+
+.container #btn {
+    display: none;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    left: 50px;
+}
+
+.container #btn + label:before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 130px;
+    height: 130px;
+    margin: -65px -65px;
+    content: '';
+    transform: translate(-6px, -6px);
+    border-radius: 50%;
+    /* Remove the black border */
+    border: none;
+    cursor: pointer;
+}
+
+.container #btn + label:after {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    margin: -50px -50px;
+    content: '';
+    border-radius: 50px;
+    /* Replace the red background with an image */
+    background: url("micr.png") no-repeat center center;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.container #btn:checked + label:after {
+    animation: stop 0.5s infinite cubic-bezier(0.4, -0.9, 0.9, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes stop {
+    70% {
+        border-radius: 6px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 60px;
+        height: 60px;
+        margin: -30px -30px;
+    }
+    100% {
+        border-radius: 6px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 64px;
+        height: 64px;
+        margin: -32px -32px;
+    }
+}
+
+#timer {
+    position: absolute;
+    top: 30%;
+    left: 80%;
+    font-size: 20px;
+    font-weight: bold;
+    /* Change the color of the running seconds */
+    color: #000000; /* Replace with your desired color */
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.container #btn:checked ~ label ~ #timer {
+    opacity: 1;
+}

@@ -37,7 +37,7 @@ def augmentAruco(corner , id , img , imgAug , drawId=True):
 
 
 def main():
-    imgAug = cv.imread(r"C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\img.png")
+    imgAug = cv.imread(r"C:\Users\VIJAY B\PycharmProjects\Ar_Vr_project\Ar_Vr_project\img.png")
     cap = cv.VideoCapture(0)
     while True:
         sccuess , img = cap.read()
