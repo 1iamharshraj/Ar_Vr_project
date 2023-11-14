@@ -1,46 +1,55 @@
+import cv2
 import cv2 as cv
 from cv2 import aruco
 import numpy as np
+import os
 
-marker_dict = aruco.getPredefinedDictionary(aruco.DICT_4X4_50)
+def findArucoMarker(img,markerSize=6,totalMarker=250,draw=True):
+    imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    key     = getattr(aruco,f'DICT_{markerSize}X{markerSize}_{totalMarker}')
+    arucoDict = aruco.getPredefinedDictionary(key)
+    arucoParam= aruco.DetectorParameters()
+    detector = aruco.ArucoDetector(arucoDict,arucoParam)
+    corner,ids,rejectd = detector.detectMarkers(imgGray)
 
-param_markers = aruco.DetectorParameters()
+    #print(ids)
+    if draw:
+        aruco.drawDetectedMarkers(img,corner)
 
-detector = aruco.ArucoDetector(marker_dict, param_markers)
+    return[corner,ids]
 
-cap = cv.VideoCapture(0)
+def augmentAruco(corner , id , img , imgAug , drawId=True):
 
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-    gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    marker_corners, marker_IDs, reject = detector.detectMarkers(gray_frame)
-    if marker_corners:
-        for ids, corners in zip(marker_IDs, marker_corners):
-            cv.polylines(
-                frame, [corners.astype(np.int32)], True, (0, 255, 255), 4, cv.LINE_AA
-            )
-            corners = corners.reshape(4, 2)
-            corners = corners.astype(int)
-            top_right = corners[0].ravel()
-            top_left = corners[1].ravel()
-            bottom_right = corners[2].ravel()
-            bottom_left = corners[3].ravel()
-            cv.putText(
-                frame,
-                f"id: {ids[0]}",
-                top_right,
-                cv.FONT_HERSHEY_PLAIN,
-                1.3,
-                (200, 100, 0),
-                2,
-                cv.LINE_AA,
-            )
-            # print(ids, "  ", corners)
-    cv.imshow("frame", frame)
-    key = cv.waitKey(1)
-    if key == ord("q"):
-        break
-cap.release()
-cv.destroyAllWindows()
+    tl = corner[0][0][0], corner[0][0][1]
+    tr = corner[0][1][0], corner[0][1][1]
+    br = corner[0][2][0], corner[0][2][1]
+    bl = corner[0][3][0], corner[0][3][1]
+
+    h,w,c = imgAug.shape
+
+    pts1 = np.array([tl,tr,br,bl])
+    pts2 = np.float32([[0,0],[w,0],[w,h],[0,h]])
+    matrix,_=cv.findHomography(pts2,pts1)
+    imgOut = cv2.warpPerspective(imgAug,matrix,(img.shape[1],img.shape[0]))
+    cv2.fillConvexPoly(img,pts1.astype(int),(0,0,0))
+    imgOut = img+imgOut
+    return imgOut
+
+
+def main():
+    imgAug = cv.imread(r"C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\img.png")
+    cap = cv.VideoCapture(0)
+    while True:
+        sccuess , img = cap.read()
+        if img is not None:
+            arucoFound = findArucoMarker(img)
+            if len(arucoFound[0])!=0:
+                for corner,id in zip(arucoFound[0],arucoFound[1]):
+                   img = augmentAruco(corner,id,img,imgAug)
+            cv.imshow("image",img)
+        else:
+            break
+        cv.waitKey(1)
+
+if __name__ == "__main__":
+    main()
