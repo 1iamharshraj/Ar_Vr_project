@@ -3,31 +3,22 @@ import numpy as np
 from  object_loader import *
 import math
 import pickle
-def main():
+from speech_recognisation import *
+def main(filepath):
     markerpoints=np.array([[0,0],[300,0],[300,300],[0,300]],dtype=np.float32)
     dictonary=cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
 
-    #pklfile1 = open(r'D:\test Ar\OpenCV_and_ArucoMarker\cameraMatrix.pkl', 'rb')
-    #pklfile2 = open(r'D:\test Ar\OpenCV_and_ArucoMarker\dist.pkl','rb')
     pklfile1 = open(r'cameraMatrix.pkl', 'rb')
     pklfile2 = open(r'dist.pkl', 'rb')
     cam_matrix= pickle.load(pklfile1)
     distCoeffs= pickle.load(pklfile2)
-    #pkldata = pickle.load(pklfile)
-    #cam_matrix = pkldata[0]
-    #distCoeffs = pkldata[1]
+
     pklfile1.close()
     pklfile2.close()
     cam_matrix1 = np.array([[800, 0, 320], [0, 800, 240], [0, 0, 1]])
 
-    #obj=OBJ('bookcase.obj',swapyz=True)
-    #obj = OBJ('Low-Poly-Racing-Car.obj', swapyz=True)
-    #obj = OBJ('soccer_ball.obj', swapyz=True)
-    #obj = OBJ('Hand.obj', swapyz=True)
-    #obj = OBJ('RubikCube.obj', swapyz=True)
-    #obj = OBJ('Ball OBJ.obj', swapyz=True)
-    #obj = OBJ('airplane.obj', swapyz=True)
-    obj = OBJ(r'wolf.obj', swapyz=True)
+
+    obj = OBJ(filepath, swapyz=True)
 
     detector = cv2.aruco.ArucoDetector(dictonary)
 
@@ -118,4 +109,25 @@ def hex_to_rgb(hex_color):
     h_len=len(hex_color)
     return tuple(int(hex_color[i:i + h_len // 3], 16) for i in range(0, h_len, h_len // 3))
 
-main()
+def animalTo3d(Animal_name):
+    animal_dict = {'cat':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\cat.obj','wolf':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\wolf.obj'}
+    Animal_name = Animal_name.casefold()
+    path = animal_dict[Animal_name]
+    return path
+
+
+while(True):
+    print("1. Record")
+    print("2. Exit")
+    n = int(input())
+    if(n==1):
+        save_as_mp3(record_audio())
+        animal = whisper_txt()
+        if animal :
+            dir = animalTo3d(animal)
+            main(dir)
+        else:
+            print("the given voice of animalname isnt available at current moment")
+    if(n==2):
+        break
+

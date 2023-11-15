@@ -43,13 +43,10 @@ def whisper_txt():
 
     # print the recognized text
     print(result.text)
+    if('cat' or 'Cat' in result.text ):
+        return 'cat'
+    elif('wolf' or 'wolf' or 'subramani' or 'Subramani' in result.text):
+        return 'wolf'
+    else
+        return None
 
-while(True):
-    print("1. Record")
-    print("2. Exit")
-    n = int(input())
-    if(n==1):
-        save_as_mp3(record_audio())
-        whisper_txt()
-    if(n==2):
-        break
