@@ -7,8 +7,10 @@ def main():
     markerpoints=np.array([[0,0],[300,0],[300,300],[0,300]],dtype=np.float32)
     dictonary=cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
 
-    pklfile1 = open(r'D:\test Ar\OpenCV_and_ArucoMarker\cameraMatrix.pkl', 'rb')
-    pklfile2 = open(r'D:\test Ar\OpenCV_and_ArucoMarker\dist.pkl','rb')
+    #pklfile1 = open(r'D:\test Ar\OpenCV_and_ArucoMarker\cameraMatrix.pkl', 'rb')
+    #pklfile2 = open(r'D:\test Ar\OpenCV_and_ArucoMarker\dist.pkl','rb')
+    pklfile1 = open(r'cameraMatrix.pkl', 'rb')
+    pklfile2 = open(r'dist.pkl', 'rb')
     cam_matrix= pickle.load(pklfile1)
     distCoeffs= pickle.load(pklfile2)
     #pkldata = pickle.load(pklfile)
@@ -25,7 +27,7 @@ def main():
     #obj = OBJ('RubikCube.obj', swapyz=True)
     #obj = OBJ('Ball OBJ.obj', swapyz=True)
     #obj = OBJ('airplane.obj', swapyz=True)
-    obj = OBJ(r'D:\test Ar\OpenCV_and_ArucoMarker\RubikCube.obj', swapyz=True)
+    obj = OBJ(r'wolf.obj', swapyz=True)
 
     detector = cv2.aruco.ArucoDetector(dictonary)
 
