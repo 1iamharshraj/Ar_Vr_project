@@ -110,7 +110,8 @@ def hex_to_rgb(hex_color):
     return tuple(int(hex_color[i:i + h_len // 3], 16) for i in range(0, h_len, h_len // 3))
 
 def animalTo3d(Animal_name):
-    animal_dict = {'cat':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\cat.obj','wolf':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\wolf.obj'}
+    #animal_dict = {'cat':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\cat.obj','wolf':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\wolf.obj'}
+    animal_dict = {'cat': r'cat.obj','wolf': r'wolf.obj'}
     Animal_name = Animal_name.casefold()
     path = animal_dict[Animal_name]
     return path

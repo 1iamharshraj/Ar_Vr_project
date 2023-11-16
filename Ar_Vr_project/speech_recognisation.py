@@ -27,7 +27,7 @@ def whisper_txt():
     model = whisper.load_model("base")
 
     # load audio and pad/trim it to fit 30 seconds
-    audio = whisper.load_audio("output.mp3")
+    audio = whisper.load_audio("Recording .m4a")
     audio = whisper.pad_or_trim(audio)
 
     # make log-Mel spectrogram and move to the same device as the model
@@ -43,10 +43,20 @@ def whisper_txt():
 
     # print the recognized text
     print(result.text)
-    if('cat' or 'Cat' in result.text ):
+    if('cat' in str(result.text).split() ):
+        print(str(result.text).split())
         return 'cat'
     elif('wolf' or 'wolf' or 'subramani' or 'Subramani' in result.text):
         return 'wolf'
-    else
+    else:
         return None
 
+while(True):
+    print("1. Record")
+    print("2. Exit")
+    n = int(input())
+    if(n==1):
+        #save_as_mp3(record_audio())
+        whisper_txt()
+    if(n==2):
+        break
