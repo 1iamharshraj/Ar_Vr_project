@@ -13,7 +13,7 @@ def record_and_save(filename, duration=5, sample_rate=44100, noise_reduction=Tru
     # Apply noise reduction
     if noise_reduction:
         print("Applying noise reduction...")
-        recording = reduce_noise(audio_clip=np.array(recording), noise_clip=np.array(recording))
+        recording = reduce_noise(np.array(recording))
 
     # Convert to AudioSegment
     audio_data = np.array(recording, dtype=np.int16)
@@ -28,7 +28,8 @@ if __name__ == "__main__":
     output_filename = "recorded_audio.mp3"
     recording_duration = 10  # Set the desired recording duration in seconds
 
-    record_and_save(output_filename, duration=recording_duration, noise_reduction=True)
+    #record_and_save(output_filename, duration=recording_duration, noise_reduction=True)
+    record_and_save(output_filename, duration=10, noise_reduction=True)
 
 
 """

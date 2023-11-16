@@ -3,7 +3,6 @@ import numpy as np
 from  object_loader import *
 import math
 import pickle
-from speech_recognisation import *
 def main(filepath):
     markerpoints=np.array([[0,0],[300,0],[300,300],[0,300]],dtype=np.float32)
     dictonary=cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
@@ -109,26 +108,19 @@ def hex_to_rgb(hex_color):
     h_len=len(hex_color)
     return tuple(int(hex_color[i:i + h_len // 3], 16) for i in range(0, h_len, h_len // 3))
 
-def animalTo3d(Animal_name):
-    #animal_dict = {'cat':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\cat.obj','wolf':r'C:\Users\eyeha\PycharmProjects\Ar_Vr_project\Ar_Vr_project\wolf.obj'}
-    animal_dict = {'cat': r'cat.obj','wolf': r'wolf.obj'}
-    Animal_name = Animal_name.casefold()
-    path = animal_dict[Animal_name]
-    return path
 
-
+"""
 while(True):
     print("1. Record")
     print("2. Exit")
     n = int(input())
     if(n==1):
-        save_as_mp3(record_audio())
-        animal = whisper_txt()
-        if animal :
+        animal = record_3d()
+        if animal != None:
             dir = animalTo3d(animal)
             main(dir)
         else:
-            print("the given voice of animalname isnt available at current moment")
+            print("the given voice of animal name isnt available at current moment")
     if(n==2):
         break
-
+"""
