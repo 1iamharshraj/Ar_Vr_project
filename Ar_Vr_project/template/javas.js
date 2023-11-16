@@ -11,7 +11,7 @@ function checkt() {
             seconds++;
             timerDisplay.innerText = seconds;
 
-            if (seconds >= 10) {
+            if (seconds >= 5) {
                 // Stop the timer after 10 seconds
                 clearInterval(timer);
                 checkbox.checked = false; // Uncheck the checkbox
